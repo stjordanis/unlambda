@@ -1,0 +1,1795 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0057)http://www.madore.org/~david/programs/unlambda/#howto_num -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+
+<title>The Unlambda Programming Language</title>
+
+<meta name="description" content="Description of the Unlambda Programming Language" lang="en">
+
+<meta name="keywords" content="Unlambda, Madore, computers, obfuscated, programming language" lang="en">
+
+
+
+<meta http-equiv="Content-Language" content="en">
+
+<style type="text/css">
+
+body {
+  font-family: Univers, Verdana, Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  background: white;
+  color: black
+}
+
+h1, h2, h3, h4, .subtitle {
+  text-align: center;
+  font-family: Baskerville, "New Century Schoolbook", serif
+}
+
+</style>
+
+<style class="fc4e448cc1190bbedd1e1de1d3e5f2c">object[type$="x-shockwave-flash"]:not([classid]),object[type$="futuresplash"]:not([classid]),embed[type$="x-shockwave-flash"],embed[type$="futuresplash"]{display:none !important}</style><style type="text/css"></style></head>
+
+
+<body>
+
+
+<h1>The Unlambda Programming Language</h1>
+
+<p class="subtitle"><big>Unlambda: Your Functional Programming
+Language Nightmares Come True</big></p>
+
+<h2>Table of contents</h2>
+
+<ul>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#whats_new">What's New in Unlambda World?</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#intro">Introduction</a>
+
+<ul>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#what_is">What is Unlambda?</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#what_looks">What does Unlambda look like?</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#principles">What are the principles of Unlambda?</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#links-obf">Links and meta-links to other obfuscated
+programming languages</a></li>
+
+</ul>
+</li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#tut">Tutorial</a>
+
+<ul>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#fun__app">Functions and application</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#combi">Combinators</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#lambda_elim">Abstraction elimination</a>
+
+<ul>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#shortcuts">Making abstraction elimination more
+efficient</a></li>
+
+</ul>
+</li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#more_bi">More Unlambda builtins</a>
+
+<ul>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#void"><code>v</code></a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#print"><code>.<var>x</var></code></a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#delay"><code>d</code></a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#callcc"><code>c</code></a></li>
+
+</ul>
+</li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#howto">HOWTO: various programming techniques</a>
+
+<ul>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#howto_loop">How do I write a loop in Unlambda?</a></li>
+
+<li><a href="./Unlambda Bible_files/Unlambda Bible.html">How can I represent numbers in
+Unlambda?</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#howto_lists">How can I represent lists (and related data
+structures) in Unlambda?</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#howto_bool">How do I write tests and booleans in
+Unlambda?</a></li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#quine">A note about the Unlambda Quine Contest</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#impl">Implementing Unlambda</a>
+
+<ul>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#impl_func">First-class functions</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#impl_cont">First-class continuations</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#impl_gc">Garbage collection</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#impl_prom">Promises</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#impl_comp">Can Unlambda be compiled?</a></li>
+
+</ul>
+</li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#ref">Unlambda reference</a></li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#distrib">Unlambda distribution</a> (download Unlambda
+here)</li>
+
+<li><a href="http://www.madore.org/~david/programs/unlambda/#cuan">Comprehensive Unlambda Archive Network</a></li>
+
+</ul>
+
+
+<h2><a name="whats_new">What's New in Unlambda World?</a></h2>
+
+<p>(If you don't know what Unlambda is, skip this section and move
+directly to the <a href="http://www.madore.org/~david/programs/unlambda/#intro">introduction</a> below.)</p>
+
+<p>[2001/08] This page is being revised in preparation of the
+Unlambda&nbsp;3 distribution.</p>
+
+
+<h2><a name="intro">Introduction</a></h2>
+
+<blockquote>
+<p>“It's disgusting — it's revolting — we love
+it.”
+<cite>CyberTabloid</cite></p>
+</blockquote>
+
+<blockquote>
+<p>“Unlambda, the language in which every program is an
+IOUCC.”
+<cite>Encyclopædia Internetica</cite></p>
+</blockquote>
+
+<blockquote>
+<p>“The worst thing to befall us since Intercal.”
+<cite>Computer Languages Today</cite></p>
+</blockquote>
+
+<blockquote>
+<p>“The effect of reading an Unlambda program is like habing
+your brains smashed out by a Lisp sexp wrapped around an ENIAC.  You
+won't find anything like it west of Alpha Centauri.”
+<cite>The Hitch-Hacker's Guide to Programming</cite></p>
+</blockquote>
+
+<h3><a name="what_is">What is Unlambda?</a></h3>
+
+<p>Unlambda is a programming language.  Nothing remarkable there.  The
+originality of Unlambda is that it stands as the unexpected
+intersection of two marginal families of languages:</p>
+
+<ul>
+
+<li>Obfuscated programming languages, of which the canonical
+representative is <a href="http://www.catb.org/~esr/intercal/">Intercal</a>.  This means
+that the language was deliberately built to make programming painful
+and difficult (i.e.&nbsp;fun and challenging).</li>
+
+<li>Functional programming languages, of which the canonical
+representative is <a href="http://www.swiss.ai.mit.edu/projects/scheme/">Scheme</a> (a Lisp
+dialect).  This means that the basic object manipulated by the
+language (and indeed the <em>only</em> one as far as Unlambda is
+concerned) is the function.</li>
+
+</ul>
+
+<p>Obfuscated programming languages (see <a href="http://www.madore.org/~david/programs/unlambda/#links-obf">below</a> for links) are typically made nasty by
+either strongly restricting the set of allowed operations in the
+language, or making them very different from what programmers are used
+to, or both.  (Of course, the goal is to do that while still being
+Turing-complete.)  Unlambda does this (note, however, that the
+operations permitted were not chosen at random: they have their
+theoretical importance).  But whereas most obfuscated programming
+languages try to somehow model the Turing Machine paradigm, Unlambda
+does not use a tape, array or stack.  Nor is it binary-oriented; as a
+matter of fact, it does not manipulate integers in any way.  Other
+remarkable (un)features of Unlambda are the fact that it does not have
+any variables, data structures or code constructs (such as loops,
+conditionals and such like).</p>
+
+<p>Rather, Unlambda uses a functional approach to programming: the
+only form of objects it manipulates are functions.  Each function
+takes a function as argument and returns a function.  Apart from a
+binary “apply” operation, Unlambda provides several builtin
+functions (the most important ones being the K and S combinators).
+User-defined functions can be created, but not saved or named, because
+Unlambda does not have any variables.</p>
+
+<p>Despite all these apparently unsurmountable limitations, Unlambda
+is fully Turing-equivalent.</p>
+
+<p>Mathematically, the core of the language can be described as an
+implementation of the lambda-calculus without the lambda operation,
+relying entirely on the K and S combinators.  Hence the name
+“Unlambda”.  It uses head (“eager”, “by
+value”, “strict”) evaluation.  I cannot claim
+originality there.  However, as far as I know, I am the first to have
+taken this theoretical concept and made it into an actual
+(deliberately obfuscated) programming language.  I added a couple of
+functions (chosen for their obscurity) to the language so as to make
+output (and, in version 2, input) possible, or just to make things
+even more obscure (delay and call/cc are such).</p>
+
+<p><small><em>A note on terminology:</em> The phrase “purely
+functional programming language” is usually applied to
+languages, like <a href="http://www.haskell.org/">Haskell</a> or
+<a href="http://www.cs.kun.nl/~clean/">Clean</a>, which are lazy and
+demand explicit sequencing of side effects.  I dislike this
+terminology: for one thing, a “functional” programming
+language is one in which functions have first-class citizenship, so a
+“purely functional” one should be one where, as in
+Unlambda, <em>only</em> functions have first-class citizenship.  And
+what are usually called “purely functional programming
+languages” should be called, exactly as I just did, lazily
+evaluating programming languages with explicitly sequenced side
+effects.  All these points are orthogonal: it is quite possible to
+conceive a lazy programming language which is not functional, or an
+eager (i.e.&nbsp;non-lazy) functional programming language which still
+demands explicit sequencing of side effects.  In any case, this is to
+say that I might, on occasion, speak of Unlambda as a “purely
+functional” programming language, although, with the usual
+terminology, it is not.</small></p>
+
+<h3><a name="what_looks">What does Unlambda look like?</a></h3>
+
+<p>Well, let's discuss an example: the following Unlambda program
+calculates and prints the Fibonacci numbers (as lines of
+asterisks)</p>
+
+<pre>```s``s``sii`ki
+  `k.*``s``s`ks
+ ``s`k`s`ks``s``s`ks``s`k`s`kr``s`k`sikk
+  `k``s`ksk
+</pre>
+
+<p>(All whitespace is optional and arbitrary.  Some former versions of
+this page gave a uselessly complicated and inefficient program.)</p>
+
+<p>You're right: it's not very readable.  Writing Unlambda programs
+isn't really as hard as it might seem; however, <em>reading</em>
+Unlambda programs is practically impossible.  We'll be <a href="http://www.madore.org/~david/programs/unlambda/#tut">explaining</a> what all this means later on, but let's
+just stick to basic observations for the moment.</p>
+
+<p>As you can see, the most common character (essentially, it makes up
+half of any Unlambda program) is the backquote (ASCII number 96=0x60).
+The backquote represents Unlambda's <em>apply</em> operation.  After
+that come the S and K combinators (and I, but I can be done away with
+entirely).  Some other characters can occur in Unlambda programs but
+they are not nearly so common.  Besides the backquote and the letters
+<code>s</code>, <code>k</code> and <code>i</code>, the above program
+has <code>r</code> and <code>.*</code> as its only other building
+blocks: these are the Unlambda printing functions (<code>r</code>
+prints a newline and <code>.*</code> prints an asterisk).  The more
+sophisticated Unlambda functions (<code>v</code>, <code>d</code>,
+<code>c</code>, <code>e</code> and the input functions) are not used
+here at all.</p>
+
+<h3><a name="principles">What are the principles of Unlambda?</a></h3>
+
+<p>The number one principle of the Unlambda language is that
+<em>everything is a function</em>: this is true in the sense that
+Unlambda is a profile of the pure untyped lambda calculus.  (Well, to
+be honest, the <code>d</code> builtin isn't precisely a function, but
+we will consider it as such anyway.)</p>
+
+<p>Despite Unlambda being a form of the lambda calculus, it does not
+have a lambda (abstraction) operation.  Rather, this operation must be
+replaced by the use of the S, K and I combinators — this can be
+done mechanically using <a href="http://www.madore.org/~david/programs/unlambda/#lambda_elim">abstraction
+elimination</a>.  Because there is no abstraction, functions are not
+named in Unlambda (except the builtin ones): there are no variables or
+such thing.  This doesn't mean you can't build up your own functions.
+Nor does the fact that there are only functions in Unlambda prevent
+you from coming up with data structures and the like, but you just
+have to represent them with <i lang="la">ad hoc</i> functions.  In
+fact, you can so well build your own structures and such that Unlambda
+is (and, to work, must be) garbage-collected like any decent
+high-level language.</p>
+
+<p>So, everything is a function.  To start with, you have the builtin
+functions (<code>i</code>, <code>k</code>, <code>s</code> and the
+like), and you can do one thing: apply a function <var>F</var> to a
+function <var>G</var>, the result being denoted
+<code>`<var>F</var><var>G</var></code>.  It is from this basic idea
+that Unlambda is built.</p>
+
+<h3><a name="links-obf">Links and meta-links to other obfuscated
+programming languages</a></h3>
+
+<ul>
+
+<li><a href="http://www.mines.edu/students/b/bolmstea/randlang/">The
+Random Programming Languages List</a>, by <a href="http://www.mines.edu/students/b/bolmstea/">Ben Olmstead</a>
+(also the inventor of <a href="http://www.mines.edu/students/b/bolmstea/malbolge/">Malbolge</a>,
+probably <em>the</em> most devilish language in existence), is a quite
+comprehensive list of evil programming languages.  It <a href="http://www.mines.edu/students/b/bolmstea/randlang/#unlambda">mentions
+Unlambda</a>.</li>
+
+<li><a href="http://www.geocities.com/ResearchTriangle/Station/2266/tarpit/tarpit.html">The
+Turing Tarpit</a>, by <a href="http://www.geocities.com/ResearchTriangle/Station/2266/">Brian
+Connors</a> (named after an <a href="http://www.catb.org/~esr/jargon/html/T/Turing-tar-pit.html">entry</a>
+in the <a href="http://www.catb.org/~esr/jargon/">Jargon File</a>), is
+a similar list of Bad Languages and other cyberlinguistic horrors.  It
+also mentions Unlambda.</li>
+
+<li><a href="http://pages.prodigy.net/rkusnery/">Ryan Kusnery</a>'s
+list of <a href="http://pages.prodigy.net/rkusnery/weird.html">Weird
+Programming Languages</a> is also quite good, despite its not
+mentioning Unlambda.</li>
+
+<li><a href="http://www2.thecia.net/users/prfnoff/">Prfnoff</a>'s <a href="http://www2.thecia.net/users/prfnoff/obslang/obslang.html">Obfuscated
+Languages list</a> mentions two languages he wrote (not usually
+included in similar lists): Fromage and BAK.</li>
+
+<li><a href="http://www.catb.org/~esr/">Eric S. Raymond</a>'s famous
+<a href="http://www.catb.org/~esr/retro/">Retrocomputing Museum</a>
+lists a few thinks that cause a feeling “between nostalgia and
+nausea”.</li>
+
+<li><a href="http://www.catb.org/~esr/intercal/">Intercal</a> remains
+the archetype of the Obfuscated Programming Language.</li>
+
+<li><a href="http://www.catseye.mb.ca/">Cats-Eye Technologies</a>
+(used to be <code>http://www.cats-eye.com/</code> and has moved to
+<code>http://www.catseye.mb.ca/</code>: thanks to Rafael Kaufmann for
+pointing this out) hosts a lot of items of related interest, including
+the famous <a href="http://www.catseye.mb.ca/esoteric/bf/">BrainF***</a> language,
+whose name quite appropriately describes the point of all these
+languages.  They also have a page on fortune's <a href="http://www.catseye.mb.ca/vintage/lesserknown/">lesser-known
+programming languages</a>.</li>
+
+<li>The <a href="http://www.purists.org/">“Institute of Applied
+Iconoclasm”</a> maintains an <a href="http://www.purists.org/esoteric/">Esoteric Languages
+Database</a>, which <a href="http://www.purists.org/esoteric/i10057.html">lists Unlambda</a>.
+They also seem to have a very high opinion of it, and of
+myself&nbsp;;-)</li>
+
+<li><a href="http://lightning.prohosting.com/~kgaughan/esolang.html">The
+Esoteric Programming Languages Ring</a> of which this site is part:<br>
+[
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;id=6;prev5">Previous 5 Sites</a>
+|
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;id=6;prev">Previous</a>
+|
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;id=6;next">Next</a>
+|
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;id=6;next5">Next 5 Sites</a>
+|
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;random">Random Site</a>
+|
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;list">List Sites</a>
+]
+</li>
+
+</ul>
+
+
+<h2><a name="tut">Tutorial</a></h2>
+
+<p>Although the very idea of a tutorial for such an obfuscated
+language as Unlambda is patently absurd, I shall try to give a brief
+introduction to the concepts before dwelling in the details of the
+reference section (which is also very short considering how small
+Unlambda is as a whole).</p>
+
+<h3><a name="fun__app">Functions and application</a></h3>
+
+<p>As has been mentioned in the <a href="http://www.madore.org/~david/programs/unlambda/#intro">introduction</a>, the
+only objects that the Unlambda programming language manipulates are
+<em>functions</em>.  Every function takes exactly one argument (that
+is also a function) and returns one value (that is also a
+function).</p>
+
+<p>The basic building blocks for Unlambda programs are the <em>primitive
+functions</em> and the <em>application operation</em>.  There are
+seven primitive functions in Unlambda version 1: <code>k</code>,
+<code>s</code>, <code>i</code>, <code>v</code>, <code>d</code>,
+<code>c</code> and <code>.<var>x</var></code> (where <var>x</var> is
+an arbitrary characters — so actually that makes 6+256 primitive
+functions, but we shall consider <code>.<var>x</var></code> as a
+single function; the <code>r</code> function is but a commodity
+synonym for <code>.<var>x</var></code> where <var>x</var> is the
+newline character).  Unlambda version 2 adds the following new
+primitive functions: <code>e</code>, <code>@</code>,
+<code>?<var>x</var></code> (where <var>x</var> is a character) and
+<code>|</code>.</p>
+
+<p>Function application is designated with the backquote (ASCII number
+96=0x60) character.  The notation is prefix, in other words,
+<code>`<var>F</var><var>G</var></code> means <var>F</var> applied to
+<var>G</var>.</p>
+
+<p>We'll be explaining in detail what application means exactly, but
+for the moment, we'll just say that it means that <var>F</var> will do
+something with the value of <var>G</var>, including applying other
+functions to it, or applying it to other functions.  (That's about the
+only thing it can do, as a matter of fact.)  Just how <var>F</var>
+does this will become clear later on (or it should).  We have to note,
+of course, that both <var>F</var> and <var>G</var> may themselves be
+obtained by applying various functions to each other.</p>
+
+<p>The fact that every Unlambda function is unary (takes exactly one
+argument) means that the backquote notation is unambiguous, and we do
+not need parentheses (or, if you prefer, the backquote plays the role
+of the open parenthesis of Lisp, but the closed parenthesis is
+unnecessary).  For example,
+<code>``<var>F</var><var>G</var><var>H</var></code> means
+(<var>F</var> applied to <var>G</var>) applied to <var>H</var> whereas
+<code>`<var>F</var>`<var>G</var><var>H</var></code> means <var>F</var>
+applied to (<var>G</var> applied to <var>H</var>).  To check whether
+an expression is a valid Unlambda expression, there is a simple
+criterion: start at the left with a counter equal to the number 1, and
+move from left to right: for every backquote encountered, increment
+the counter, and for every primitive function encountered, decrement
+it; the counter must always remain positive except at the very end
+when it must reach zero.</p>
+
+<p><a name="curry">Since all Unlambda functions take exactly one
+argument, when we wish to handle a function of several arguments, it
+is necessary to “curry” that function.</a> That is, read the
+arguments one after another.  For example, if <var>F</var> is a
+function that should take three variables, it will be applied thus:
+<code>```<var>F</var><var>G<sub>1</sub></var><var>G<sub>2</sub></var><var>G<sub>3</sub></var></code>.
+The idea being that <var>F</var> will do nothing but read the first
+argument and return (without side effects) a function that reads the
+second argument and returns a function that reads the third argument
+and finally do whatever calculation it is <var>F</var> was supposed to
+perform.  Thus, both
+<code>``<var>F</var><var>G<sub>1</sub></var><var>G<sub>2</sub></var></code>
+and <code>`<var>F</var><var>G<sub>1</sub></var></code> are legal, but
+they don't do much except wait for more arguments to come.</p>
+
+<p>The previous discussion is not so theoretical.  Of course, when the
+user is defining his own functions, he may use whatever mechanism he
+seems fit for reading the functions' arguments (but such a
+currying is certainly the best because pairs and lists are so
+horribly difficult to define in Unlambda).  But the builtin
+<code>k</code> and <code>s</code> functions take respectively 2 and 3
+arguments, and the several arguments are passed in the manner which we
+have just described.  (<a name="zero_note">As a side note</a>, I
+remark that it is, if not impossible, at least inconvenient, to
+construct functions that take zero arguments because preventing
+evaluation until all arguments have been read is good but when there
+are no arguments to be read, the situation is not pleasant; in the
+pure lambda calculus there is no problem because evaluation order is
+unspecified and irrelevant, but in Unlambda we have a bigger problem.
+Here the <code>d</code> function might help.)</p>
+
+<p>A note about evaluation order: when Unlambda is evaluating an
+expression <code>`<var>F</var><var>G</var></code>, it evaluates
+<var>F</var> first, and then <var>G</var> (the exception being when
+<var>F</var> evaluates to <code>d</code>), and then applies
+<var>F</var> to <var>G</var>.  Evaluation is idempotent: that is,
+evaluating an already evaluated expression in Unlambda does not have
+any effect (there is no level-of-quotation concept as in m4 or <a href="http://www.eleves.ens.fr:8080/home/madore/programs/simple/simple.html">SIMPLE</a>).</p>
+
+<p>(Perhaps it would be clearer to describe things by distinguishing
+<em>expressions</em> and <em>functions</em>, where the latter are
+obtained by evaluating the former.  This is what the Java version of
+the Unlambda interpreter does, for example (whereas the Scheme version
+does not).  It is merely a matter of choice.  True, the distinction
+might help in understanding the <code>d</code> builtin, since it keeps
+an <em>expression</em> in its unevaluated form.)</p>
+
+<p>We now turn to the description of the Unlambda builtins.</p>
+
+<h3><a name="combi">Combinators</a></h3>
+
+<p>The <code>k</code> and <code>s</code> builtins are the core of the
+language.  Just these two suffice to make Unlambda Turing complete
+(although <code>.<var>x</var></code> is also necessary if you want to
+print anything).  The <code>k</code> builtin is easy enough to
+describe: it takes two arguments (in curried fashion, as explained <a href="http://www.madore.org/~david/programs/unlambda/#curry">above</a>) and returns the first.  Thus,
+<code>``k<var>X</var><var>Y</var></code> evaluates to
+<code><var>X</var></code> (evaluated).  Note that <var>Y</var> is
+still evaluated in the process.  The <code>s</code> builtin is
+slightly more delicate.  It takes three arguments, <var>X</var>,
+<var>Y</var> and <var>Z</var>, and evaluates as does
+<code>``<var>X</var><var>Z</var>`<var>Y</var><var>Z</var></code>.</p>
+
+<p>So, let's get things straight: <code>k</code> doesn't do much until
+it is applied to two arguments, in which case it throws the second one
+away and returns the first.  As for <code>s</code>, it doesn't do much
+until it is applied to three arguments, at which point it applies the
+first to the third, and the second to the third, and the result of the
+former application to the result of the latter.</p>
+
+<p>To take an example, consider <code>```skss</code>: here <code>s</code>
+is applied to three arguments, <code>k</code>, <code>s</code> and
+<code>s</code>, so it performs the evaluation of <code>``ks`ss</code>.
+But here we see that the first k is applied to two arguments
+(<code>s</code> and <code>`ss</code>), so that it returns the first
+(namely <code>s</code>), and the final result is <code>s</code>.</p>
+
+<p>We also mention immediately the <code>i</code> function: it is simply
+the identity function In other words, it takes an argument and returns
+it intact.  The <code>i</code> function is not strictly necessary but
+it is practical.  It could be replaced by <code>``skk</code>.
+(Indeed, <code>```skk<var>X</var></code> evaluates as
+<code>``k<var>X</var>`k<var>X</var></code> because of the
+<code>s</code>, which in turn evaluates as <code><var>X</var></code>
+because of the <code>k</code>.)</p>
+
+<p>To summarize, the <code>k</code> builtin is a “constant
+function constructor”.  That is, for all <var>X</var>,
+<code>`k<var>X</var></code> is the constant function with value
+<var>X</var>.  The <code>s</code> builtin corresponds to
+“substituted application”: that is,
+<code>``s<var>X</var><var>Y</var></code> is a function that, instead
+of applying <var>X</var> to <var>Y</var> directly, will apply each of
+them to <var>Z</var> (the argument) first, and then one to the other.
+Finally, <code>i</code> is the identity function.</p>
+
+<h3><a name="lambda_elim">Abstraction elimination</a></h3>
+
+<p>We will now try to describe the central process of abstraction
+elimination.  This is not necessary to understand how Unlambda works,
+but it is necessary to understand how you can do anything with it.</p>
+
+<p>The central feature which <em>appears</em> to be missing from
+Unlambda is that of variables.  This is precisely what abstraction
+elimination enables us to recover.  The problem is, given an
+expression <var>F</var> that contains, apart from ordinary Unlambda
+symbols, one “variable” symbol which we will write
+<code>$<var>x</var></code>, to build a function that, when applied to
+some <var>X</var>, will return the value of <var>F</var> with
+<var>X</var> substituted in place of <code>$<var>x</var></code>.  In
+other words, we want to build a function (which we will write
+<code>^<var>x</var><var>F</var></code>) which takes a value
+<var>X</var> for <code>$<var>x</var></code> and does some operation
+(specified by <var>F</var>) on it.  This is the <dfn>lambda</dfn> (or
+<em>abstraction</em>) operation of the lambda calculus (our notation
+<code>^</code> is supposed to stand for a lambda).  Unfortunately,
+Unlambda, as its name indicates, does not have this lambda operation,
+and our problem is to eliminate it, in a systematic way, from
+expressions (hence the name <em>abstraction elimination</em>).  For
+example, <code>^x$x</code> (the function of <code>$x</code> which
+simply returns <code>$x</code>) is supposed to give <code>i</code> (or
+something equivalent) when abstraction elimination is performed.</p>
+
+<p>So, we take an expression <var>F</var> involving
+<code>$<var>x</var></code>, and we want to eliminate the starting
+lambda in <code>^<var>x</var><var>F</var></code>.  We do this by
+induction on the complexity of <var>F</var>; there are three cases
+which must be taken into account: either <var>F</var> is builtin (or
+some variable other than <code>$<var>x</var></code>, if we permit
+this), or <var>F</var> is <code>$<var>x</var></code>, or <var>F</var>
+is an application, say, <code>`<var>G</var><var>H</var></code>, with
+<var>G</var> and <var>H</var> simpler expressions (which, by
+induction, we know how to reduce).  So we consider these three cases
+separately:</p>
+
+<ul>
+
+<li><a name="elim_case1">In the first case</a>, we want to eliminate
+the lambda from <code>^<var>x</var><var>F</var></code>, where
+<var>F</var> does not depend on <code>$<var>x</var></code>.  So it is
+the constant function with value <var>F</var>.  But, as we know, this
+is <code>`k<var>F</var></code>.  So we know how to eliminate
+abstraction in this case.</li>
+
+<li>In the second case, we want to eliminate the lambda from
+<code>^<var>x</var>$<var>x</var></code>.  But this is precisely the
+identity function, so it reduces as <code>i</code>.</li>
+
+<li>In the third case, we want to eliminate the lambda from
+<code>^<var>x</var>`<var>G</var><var>H</var></code>, assuming we know
+how to eliminate the lambda from
+<code>^<var>x</var><var>G</var></code> and from
+<code>^<var>x</var><var>H</var></code>.  But the function we are
+considering takes an <var>X</var> and applies it to
+<code>^<var>x</var><var>G</var></code>, then to
+<code>^<var>x</var><var>H</var></code>, and finally applies the result
+of one to the result of the other.  This is precisely the role of the
+<code>s</code> builtin.  So
+<code>^<var>x</var>`<var>G</var><var>H</var></code> is no other than
+<code>``s^<var>x</var><var>G</var>^<var>x</var><var>H</var></code>
+(and by eliminating the lambda from the inner expressions we get what
+we wanted).</li>
+
+</ul>
+
+<p>Finally, abstraction elimination is described mechanically as
+follows: consider the expression <var>F</var> and we want to eliminate
+the lambda from <code>^<var>x</var><var>F</var></code>.  Scan the
+<var>F</var> expression from left to right: for every <code>`</code>
+(backquote) encountered, write <code>``s</code> (by virtue of the
+third case above); for every <code>$<var>x</var></code> encountered,
+write <code>i</code> (by virtue of the second case); and for any
+builtin or any variable other than <code>$<var>x</var></code>, write
+<code>`k</code> followed by the thing in question.</p>
+
+<p>As an example, the function <code>^x`$xk</code>, which takes a
+function and applies that function to the function <code>k</code>,
+transforms as <code>``si`kk</code>.</p>
+
+<p>If several lambdas need to be eliminated from one expression, the
+trick is to start with the innermost ones, and to eliminate the
+outermost lambdas last.  As an example, <code>^x^y`$y$x</code> becomes
+first <code>^x``si`k$x</code> (upon eliminating the innermorst lambda)
+and then <code>``s``s`ks`ki``s`kki</code> (upon eliminating the
+outermost).</p>
+
+<p>If several lambdas are present, i.e.&nbsp;if several abstraction
+eliminations are performed as explained in the previous paragraph, the
+length of the resulting expression grows exponentially (with factor 3
+for each lambda).  A single <code>`</code> becomes <code>``s</code>
+after one abstraction elimination, then <code>``s``s`ks</code> after a
+second, <code>``s``s`ks``s``s`ks``s`kk`ks</code> after a third,
+<code>``s``s`ks``s``s`ks``s`kk`ks``s``s`ks``s``s`ks``s`kk`ks``s``s`ks``s`kk`kk``s`kk`ks</code>
+after a fourth.  Similar giveaway sequences appear before any
+builtin.</p>
+
+<h4><a name="shortcuts">Making abstraction elimination more
+efficient</a></h4>
+
+<p>It is sometimes desirable to obtain a shorter result when
+performing lambda elimination.  Shortcuts can be used, but they demand
+some care.</p>
+
+<p>Consider the <a href="http://www.madore.org/~david/programs/unlambda/#elim_case1">first case</a> we described above.
+We explained that when <var>F</var> is a builtin or a variable other
+than <code>$<var>x</var></code> then we can eliminate the lambda from
+<code>^<var>x</var><var>F</var></code> by simply rewriting it as
+<code>`k<var>F</var></code>.  This is quite correct.  However, this
+rule applies a bit more widely than we have suggested: this is true as
+long as <var>F</var> does not involve <code>x</code>, because it is
+then a constant, and creating constants is precisely what the K
+builtin is good at.  So if <var>F</var> is a lengthy expression not
+involving <code>$<var>x</var></code>, instead of going through the
+tedious process of eliminating in <var>F</var>, we can shortcut the
+whole thing and rewrite it as <code>`k<var>F</var></code>.</p>
+
+<p>There is a danger, however, in so doing.  While all this works
+without glitch in the blessed realm of the pure untyped lambda
+calculus, i.e.&nbsp;in the absence of side effects (the functions we
+have seen so far do not create any side effects) and as long as we
+don't express excessive worries about nontermination, there is a
+slight difficulty involved when evaluating <var>F</var> causes a side
+effect or might not terminate.  Indeed, when we write
+<code>^<var>x</var><var>F</var></code>, we probably expect the side
+effect (or nontermination) in question to be delayed until the
+function is applied (i.e.&nbsp;until <code>$<var>x</var></code>
+receives a value, even if that value is ignored); this is indeed the
+case if we perform abstraction elimination through the canonical
+(long) way.  If, however, we short-cut and rewrite this as
+<code>`k<var>F</var></code>, then <var>F</var> <em>is</em> evaluated
+as soon as this expression is encountered, even if the function is not
+applied to anything.  This might not be what you wanted.</p>
+
+<p>So the shortcut is really this: you can rewrite
+<code>^<var>x</var><var>F</var></code> as <code>`k<var>F</var></code>
+provided (a)&nbsp;<var>F</var> does not involve
+<code>$<var>x</var></code>. amd (b)&nbsp;you can prove that evaluating
+<var>F</var> terminates and performs no side effect.  One easy way of
+making sure of (b) is to check that the only applications found in
+<var>F</var> are of the form: the K builtin applied to <em>one</em>
+argument, or the S builtin applied to <em>one</em> or <em>two</em>
+arguments, or the D builtin applied to any expression whatsoever (see
+<a href="http://www.madore.org/~david/programs/unlambda/#delay">below</a> about this).</p>
+
+<p>If <var>F</var> does not involve <var>x</var> but <em>does</em>
+involve evaluations which might (or do) cause side effects or
+nontermination, there is still a way to perform abstraction
+elimination from <code>`k<var>F</var></code> without peering in the
+entrails of <var>F</var>.  Namely, to use the D builtin described <a href="http://www.madore.org/~david/programs/unlambda/#delay">below</a>, and write <code>`d`k<var>F</var></code>.  A
+true purist, however, does not rely on the D to make his program
+work.</p>
+
+<p>Another shortcut in abstraction elimination is to spot expressions
+such as <code>^<var>x</var>`<var>F</var>$<var>x</var></code> and to
+rewrite them as simply <code><var>F</var></code> — provided of
+course the variable <code>$<var>x</var></code> does not appear in
+<var>F</var>.  This is pretty benign if <var>F</var> is just a builtin
+<em>other than D</em>, or a variable other than
+<code>$<var>x</var></code>.  But if <var>F</var> can produce side
+effects, this presents the same risks as the other shortcut we just
+described (and you can also get around them by writing
+<code>`d<var>F</var></code>).</p>
+
+<p>Note also that the <a href="http://www.madore.org/~david/programs/unlambda/#void">V</a> builtin can always be
+abstracted to itself.  (That is, <code>`kv</code> is functionally
+identical to <code>v</code>.)</p>
+
+<h3><a name="more_bi">More Unlambda builtins</a></h3>
+
+<h4><a name="void"><code>v</code></a></h4>
+
+<p>The <code>v</code> function is a kind of “black hole”.
+It takes an argument, ignores it and returns <code>v</code>.  It can
+be used to swallow any number of arguments.</p>
+
+<p>The <code>v</code> function can be implemented using <code>s</code>,
+<code>k</code> and <code>i</code> (and hence, using <code>s</code> and
+<code>k</code> only).  Indeed, it can be written using the lambda
+expression <code>`^h^x`$h$h^h^x`$h$h</code> (which evaluates to
+<code>^x</code> of the same thing), and <a href="http://www.madore.org/~david/programs/unlambda/#lambda_elim">abstraction elimination</a> shows that this is
+<code>` ``s``s`kskk ``s``s`kskk</code> (here is an example when some
+incorrect <a href="http://www.madore.org/~david/programs/unlambda/#shortcuts">shortcuts</a> in an abstraction
+elimination can be disastrous, for example if <code>` ``s`kk``sii
+``s`kk``sii</code> were used instead, as obtained by attempting to
+reduce <code>^h^x`$h$h</code> as
+<code>^h`k`$h$h</code>).</p>
+
+<h4><a name="print"><code>.<var>x</var></code></a></h4>
+
+<p>The <code>.<var>x</var></code> function is the only way to perform
+output in Unlambda (note that in Unlambda version 1 there is no way to
+perform input).  This function takes an argument and, like the
+identity function, returns it unchanged.  Only contrary to the
+identity function it has a side effect, namely to print the character
+<var>x</var> on the standard output (this writing takes place when
+<code>.<var>x</var></code> is applied).  Note that while this function
+is written with two characters, it is still <em>one</em> function; on
+no account should <code>.<var>x</var></code> be thought of as
+something applied to <var>x</var> (and, just to insist, <em>there is
+no such function as <code>.</code> (dot)</em>, only
+<code>.<var>x</var></code> (dot <var>x</var>)).  The <code>r</code>
+function is just one instance of the <code>.<var>x</var></code>
+function, namely when <var>x</var> is the newline character.  Thus,
+the <code>`ri</code> program has the effect of printing a newline (so
+would <code>`rv</code> or <code>`rr</code> or
+<code>`r<var>(anything)</var></code>, but <code>r</code> alone doesn't
+do it, because here the <code>r</code> function isn't applied: here my
+<a href="http://www.madore.org/~david/programs/unlambda/#zero_note">note</a> about the impossibility of <a href="http://www.madore.org/~david/programs/unlambda/#curry">currying</a> functions of zero arguments should become
+clearer).</p>
+
+<h4><a name="delay"><code>d</code></a></h4>
+
+<p>The <code>d</code> function is an exception to the normal rules of
+evaluation (hence it should be called a <em>special form</em> rather
+than a function).  When Unlambda is evaluating
+<code>`<var>F</var><var>G</var></code> and <var>F</var> evaluates to
+<code>d</code> (for example when <var>F</var> <em>is</em>
+<code>d</code>) then <var>G</var> is not evaluated.  The result
+<code>`d<var>G</var></code> is a <em>promise</em> to evaluate
+<var>G</var>: that is, <var>G</var> is kept unevaluated until the
+promise is itself applied to an expression <var>H</var>.  When that
+happens, <var>G</var> is finally evaluated (<em>after</em>
+<var>H</var> is), and it is applied to <var>H</var>.  This is called
+<em>forcing</em> the promise.</p>
+
+<p>For example, <code>`d`ri</code> does nothing (and remains
+unevaluated), and <code>``d`rii</code> prints a blank line (because we
+are forcing the promise).  Another point to note is that
+<code>``dd`ri</code> prints a blank line: indeed, <code>`dd</code> is
+first evaluated, and since it is not the <code>d</code> function
+(instead, it is a promise to evaluate <code>d</code>), it does not
+prevent the <code>`ri</code> expression from being evaluated (to
+<code>i</code>, with the side effect of printing a newline), so that
+when finally <code>d</code> is applied, it is already too late to
+prevent the newline from being printed; to summarize, the
+<code>d</code> function can delay the <code>d</code> function itself.
+On the other hand, <code>``id`ri</code> does not print a blank line
+(because <code>`id</code> does evaluate to <code>d</code>).
+Similarly, <code>```s`kdri</code> is first transformed to
+<code>```kdi`ri</code>, in which <code>``kdi</code> is evaluated to
+<code>d</code>, which then prevents <code>`ri</code> from being
+evaluated so no newline gets printed.</p>
+
+<p>Writing <code>`d`k<var>F</var></code> is another form of promise
+(perhaps more customary but at the same time less transparent): when
+it is applied to an arbitrary argument <var>Y</var>, then <var>Y</var>
+is ignored and <var>F</var> is evaluated and returned.  This
+possibility has already been mentioned in the discussion on <a href="http://www.madore.org/~david/programs/unlambda/#shortcuts">shortcuts</a> during abstraction elimination.</p>
+
+<h4><a name="callcc"><code>c</code></a></h4>
+
+<p>The <code>c</code> (“call with current continuation”)
+function is probably the most difficult to explain (if you are
+familiar with the corresponding function in Scheme, it will help a
+lot).  I suggest you try reading the <a href="http://www.eleves.ens.fr:8080/home/madore/computers/callcc.html"><code>call/cc</code>
+page</a> at this point.  <code>c</code> called with an argument
+<var>F</var> will apply <var>F</var> to <em>the current
+continuation</em>.  The current continuation is a special function
+which, when it is applied to <var>X</var>, has the effect of making
+<code>c</code> return immediately the value <var>X</var>.  In other
+words, <code>c</code> can return in two ways: if <var>F</var> applied
+to the continuation evaluates normally, then its return value is that
+of <code>c</code>; but if <var>F</var> calls the continuation at some
+point, <code>c</code> will immediately return the value passed to the
+continuation.</p>
+
+<p>Note that the continuation can even escape from the <code>c</code>
+call, in which case calling it will have the effect of going “back in
+time” to that <code>c</code> call and making it return whatever value
+was passed to the continuation.  For a more detailed discussion, see
+any book on Scheme or the <a href="http://www.eleves.ens.fr:8080/home/madore/computers/callcc.html"><code>call/cc</code>
+page</a> mentioned.</p>
+
+<p>Examples of <code>c</code> include <code>``cir</code>: here,
+<code>`ci</code> evaluates to the continuation of the <code>c</code>
+which we shall write <code>&lt;cont&gt;</code>, and we have
+<code>`&lt;cont&gt;r</code>: here, the continuation is applied, so it
+makes the <code>c</code> call return <code>r</code>, and we are left
+with <code>`rr</code> which prints a newline. Another interesting
+example is <code>`c``s`kr``si`ki</code>: in this expression, the
+argument <code>``s`kr``si`ki</code> (which does not evaluate any
+further) is applied to the continuation of the <code>c</code>, giving
+<code>```s`kr``si`ki&lt;cont&gt;</code> (where we have written
+<code>&lt;cont&gt;</code> for the continuation in question); this
+gives <code>` ``kr&lt;cont&gt; ```si`ki&lt;cont&gt;</code> which
+evaluates to <code>`r``i&lt;cont&gt;``ki&lt;cont&gt;</code>, hence to
+<code>`r`&lt;cont&gt;i</code> (this was where we wanted to get), and
+in this expression, the continuation is applied, so that the
+<code>c</code> in the initial expression immediately returns
+<code>i</code>, and the remaining calculations are lost (in
+particular, the <code>r</code> is lost and no newline gets
+printed).</p>
+
+<p>Expressions including <code>c</code> function calls tend to be
+hopelessly difficult to track down.  This was, of course, the reason
+for including it in the language in the first place.</p>
+
+<p>As an exercice in using <code>c</code>, you might try constructing
+an expression that when applied to <code>v</code> returns
+<code>i</code>, and when applied to <code>i</code> returns
+<code>v</code> (this is not possible in the absence of
+<code>c</code>).  Answer is in the <a href="http://www.madore.org/~david/programs/unlambda/#howto_bool">HOWTO section
+on booleans</a>.</p>
+
+<h3><a name="howto">HOWTO: various programming techniques</a></h3>
+
+<h4><a name="howto_loop">How do I write a loop in Unlambda?</a></h4>
+
+<p>We'll explain this with a simple example: how to write a loop that
+prints “Hello, world!” over and over, followed by a
+certain number of asterisks, each line having one more asterisk than
+the previous.</p>
+
+<p>The first step is to write the loop using tail-recursion.  We want
+to write a function <code><var>&lt;loop&gt;</var></code>: it will take
+as its argument a function <code>$f</code> that prints a certain
+number of asterisks, it will print “Hello, world!”,
+followed by the asterisks, and a newline, and then it will call itself
+with a new function that prints one more asterisk.</p>
+
+<p>To get things straight, we assume that
+<code><var>&lt;msg&gt;</var></code> is a function that acts like the
+identity with the side-effect of printing “Hello, world!”,
+and we assume that similarly, <code>$f</code> acts like the identity
+with the side effect of printing the asterisks.  Moreover, we will
+write a function <code><var>&lt;inc&gt;</var></code> that takes such
+an <code>$f</code> and returns a new one that prints one more
+asterisk.</p>
+
+<p>Our first attempt at writing <code><var>&lt;loop&gt;</var></code>
+is the following:
+
+<code>^f``r`$f`<var>&lt;msg&gt;</var><var>&lt;loop&gt;</var>`<var>&lt;inc&gt;</var>$f</code>.
+
+The main ideas are: first, to “increase” <code>$f</code>,
+we simply call the same function again with
+<code>`<var>&lt;inc&gt;</var>$f</code> as argument (this is the
+standard use of tail-recursion to avoid imperative constructions like
+variable change).  Second, to make sure we have the side effects of
+writing the message, the asterisks and the newline, we apply them to
+the operator (we could have equally well applied them to the operand),
+which works since they act like the identity.</p>
+
+<p>Only one thing is wrong with our attempt:
+<code><var>&lt;loop&gt;</var></code> cannot be part of its own
+expansion.  Here is how we get around this: we add one more parameter,
+<code>$h</code>, to <code><var>&lt;loop&gt;</var></code>, and we
+decide that <code><var>&lt;loop&gt;</var></code> will be called with
+this parameter equal to <code><var>&lt;loop&gt;</var></code> itself.
+Now there is no difficulty in writing the loop: it is
+
+<code>^h^f```r`$f`<var>&lt;msg&gt;</var>$h$h`<var>&lt;inc&gt;</var>$f</code>.
+
+<a href="http://www.madore.org/~david/programs/unlambda/#lambda_elim">Eliminating abstraction</a>, we find
+<code><var>&lt;loop&gt;</var></code> equal to
+
+<code>``s``s`ks``s``s`ks``s`k`s`kr``s`k`si``s`kd``s`kk<var>&lt;msg&gt;</var>k`k<var>&lt;inc&gt;</var></code>
+
+and it remains to write the <code><var>&lt;msg&gt;</var></code> and
+<code><var>&lt;inc&gt;</var></code> functions.  We obtain them by
+eliminating abstraction respectively from
+<code>^x`````````````.H.e.l.l.o.,. .w.o.r.l.d.!$x</code> and
+<code>^f^x`$f`.*$x</code>.</p>
+
+<p>Finally, to start our program, we apply to
+<code><var>&lt;loop&gt;</var></code> the function
+<code>^h``$h$hi</code> (i.e.&nbsp;<code>``s``sii`ki</code>), and our
+final program is</p>
+
+<pre>```s``sii`ki
+ ``s``s`ks
+     ``s``s`ks``s`k`s`kr
+               ``s`k`si``s`k`s`k
+                               `d````````````.H.e.l.l.o.,. .w.o.r.l.d.!
+                        k
+      k
+  `k``s``s`ksk`k.*
+</pre>
+
+<p>(Concerning indentation: the idea is that, if we insert a line
+break between an expression <var>F</var> and an expression
+<var>G</var> to which <var>F</var> is applied, then we start
+<var>G</var> on the same column as <var>F</var>; furthermore, we then
+always insert a line break after <var>G</var>.)</p>
+
+<h4><a name="howto_num">How can I represent numbers in
+Unlambda?</a></h4>
+
+<p>There are many ways to do that.  In the <a href="http://www.madore.org/~david/programs/unlambda/#howto_loop">previous example</a>, we have (implicitly)
+represented the integer <var>n</var> by the function that acts like
+the identity but with the side effect of printing <var>n</var>
+asterisks.  Such a representation is fine for adding integers (just
+compose the functions, i.e.&nbsp;the addition function is
+<code>^m^n^x`$m`$n$x</code>), but you won't be able to multiply them
+for example.</p>
+
+<p>Generalizing a little we can arive at a representation of integers
+which is quite standard and which allows any kind of manipulation
+(i.e.&nbsp;any recursive function on the integers can be represented
+in the pure lambda calculus using this representation), the so-called
+“Church integers” (named after Alonzo Church, the inventor
+of the lambda calculus).  Our previous representation represented
+<var>n</var> as the <var>n</var>-th iterate of the function
+<code>.*</code>: this is not good because we can't do much with
+<code>.*</code>.  Rather to try to find a function which is general
+enough to permit arbitrary manipulations (it can be found but it is a
+bit long), we represent <var>n</var> as the <var>n</var>-th iterate of
+a <em>parameter</em> function <code>$<var>f</var></code>.  So we
+write</p>
+
+<ul>
+
+<li><code>&lt;0&gt;</code> is <code>^f^x$x</code>
+(i.e.&nbsp;<code>`ki</code>).</li>
+
+<li><code>&lt;1&gt;</code> is <code>^f^x`$f$x</code>
+(i.e.&nbsp;<code>i</code>).</li>
+
+<li><code>&lt;2&gt;</code> is <code>^f^x`$f`$f$x</code>
+(i.e.&nbsp;<code>``s``s`kski</code>).</li>
+
+<li><code>&lt;3&gt;</code> is <code>^f^x`$f`$f`$f$x</code>
+(i.e.&nbsp;<code>``s``s`ksk``s``s`kski</code>).</li>
+
+<li>and so on…</li>
+
+</ul>
+
+<p>Using this representation, the various operations are quite simple
+to perform on numbers:</p>
+
+<ul>
+
+<li>The function <code>&lt;print&gt;</code> which prints a Church
+integer as a line of asterisks is <code>^n`r``$n.*i</code>,
+i.e.&nbsp;<code>``s`kr``s``si`k.*`ki</code>.</li>
+
+<li>The function <code>&lt;inc&gt;</code> which increments a Church
+integer is <code>^n^f^x`$f``$n$f$x</code>,
+i.e.&nbsp;<code>`s``s`ksk</code> (this is a <em>very</em> highly <a href="http://www.madore.org/~david/programs/unlambda/#shortcuts">optimized</a> abstraction elimination).</li>
+
+<li>The function <code>&lt;add&gt;</code> which adds two Church
+integers is <code>^m`$m&lt;inc&gt;</code>,
+i.e.&nbsp;<code>``si`k`s``s`ksk</code>.</li>
+
+<li>The function <code>&lt;mul&gt;</code> which multiplies two Church
+integers (by applying them consecutively to the same function) is
+<code>^m^n^f`$m`$n$f</code>, i.e.&nbsp;<code>``s`ksk</code>.</li>
+
+<li>The function <code>&lt;pow&gt;</code> which raises its second
+argument to the power of its first, by applying the first argument to
+the second (thus multiplying it with itself as many times as given by
+the first) is <code>^m^n`$m$n</code>, i.e.&nbsp;<code>i</code>
+(impressive, isn't it?).</li>
+
+</ul>
+
+<p>As an example of the use of Church integers, we construct an
+Unlambda program that prints a line of 1729 stars.  To do this, we use
+the fact that 1729 is the sum of 10<sup>3</sup> and 9<sup>3</sup>
+(Srinivasa Ramanujan <i lang="la">in memoriam</i>), so we write the
+program as
+<code>`&lt;print&gt;`^n``&lt;add&gt;`&lt;3&gt;$n`&lt;3&gt;`&lt;inc&gt;$n`&lt;2&gt;&lt;3&gt;</code>,
+(we have used the fact that 9 is 3<sup>2</sup> and 10 is its
+successor), so
+<code>`&lt;print&gt;```s``s`k&lt;add&gt;&lt;3&gt;``s`k&lt;3&gt;&lt;inc&gt;`&lt;2&gt;&lt;3&gt;</code>
+and after replacement our program is finally</p>
+
+<pre>```s`kr``s``si`k.*`ki
+ ```s``s`k``si`k`s``s`ksk``s``s`ksk``s``s`kski
+   ``s`k``s``s`ksk``s``s`kski`s``s`ksk
+  ```s``s`kski``s``s`ksk``s``s`kski
+</pre>
+
+<p>How about <em>comparing</em> the Church integers?  Sure enough,
+that can be done.  I suggest the following — however, keep in
+mind that their performance (both in size and time) is far worse than
+the previous functions, and they are on the whole far less
+“polished”.</p>
+
+<ul>
+
+<li>The function <code>&lt;test&gt;</code> which returns
+<code>i</code> if its argument is nonzero, and <code>v</code>
+otherwise, is <code>^n``$n`kiv</code>,
+i.e.&nbsp;<code>``s``si`k`kiv</code>.  A faster (but longer) version
+of the same uses call/cc to return immediately when the argument has
+been discovered to be non-zero: <code>^n`c^q`v``$n$qi</code>,
+i.e.&nbsp;<code>``s`kc``s`k`sv``ss`k`ki</code>.</li>
+
+<li>The function <code>&lt;leq&gt;</code> which returns <code>i</code>
+if its first argument is less or equal to its second, and
+<code>v</code> othwerise, is
+<code>^m^n```$m&lt;A&gt;^ti``$n&lt;A&gt;^tv</code> where
+<code>&lt;A&gt;</code> is <code>^f^g`$g$f</code> (I suggest working
+this out to understand the <i lang="la">modus operandi</i>); so
+<code>&lt;leq&gt;</code> is
+<code>``s``s`ks``s`kk``s``si`k``s`k`sik`k`ki`k``s``si`k``s`k`sikv</code>.</li>
+
+</ul>
+
+<p>To decrement (and hence to substract) Church integers is by no
+means impossible.  I don't know if it can be done with even moderate
+efficiency, however.  The following scheme will work, but it is
+hopeless algorithmically:</p>
+
+<ul>
+
+<li>Consider <code>``$ni`ki</code>: it evaluates to <code>`ki</code>
+for any Church integer <code>$n</code>, and, if <code>$n</code> is
+<code>`k`kk</code>, then it evaluates to <code>k</code>.
+Consequently, <code>^n````$ni`ki`ki`&lt;inc&gt;$n</code> returns
+<code>`&lt;inc&gt;$n</code> if applied to an argument <code>$n</code>
+which is a Church integer, and <code>`ki</code> (i.e.&nbsp;the Church
+integer <code>&lt;0&gt;</code>) if applied to <code>`k`kk</code>.
+Call this function <code>&lt;_inc&gt;</code>.  It is
+<code>``s``s``s``si`ki`k`ki`k`ki`s``s`ksk</code>.</li>
+
+<li>Consequently, the function <code>&lt;dec&gt;</code>, which
+decrements a Church integer, can be written as
+<code>^n``$n&lt;_inc&gt;`k`kk</code>, i.e.
+<code>``s``si`k``s``s``s``si`ki`k`ki`k`ki`s``s`ksk`k`k`kk</code>.
+Note that this function takes <code>&lt;0&gt;</code>
+(i.e.&nbsp;<code>`ki</code>) to <code>`k`kk</code>) — so you
+should only use it on Church integers which were
+<code>&lt;test&gt;</code>ed as non zero.</li>
+
+<li>The substraction function can be built from the
+<code>&lt;dec&gt;</code> function.  I won't even write it because it's
+too ugly.</li>
+
+</ul>
+
+<p>Note that the Church integers are by no means the only way to
+represent integers in Unlambda.  Essentially, there are two paths: you
+can either use a representation which is particular to your problem at
+hand (as we did <a href="http://www.madore.org/~david/programs/unlambda/#howto_loop">above</a>) and which is not
+completely general, or you can use a universal representation,
+i.e.&nbsp;one which can be transformed into the Church integers and <i lang="la">vice versa</i> (and which differs only by questions of
+convenience).  An example of a non-universal representation is:
+representing <var>n</var> by a function that prints <var>n</var>
+asterisks.  An example of a universal representation is: representing
+<var>n</var> by a <a href="http://www.madore.org/~david/programs/unlambda/#howto_lists">list</a> of length
+<var>n</var>, or representing <var>n</var> by a function which
+evaluates its argument applied to <code>i</code> <var>n</var>
+times.</p>
+
+<h4><a name="howto_lists">How can I represent lists (and related data
+structures) in Unlambda?</a></h4>
+
+<p>We discuss how to create two types: products (i.e.&nbsp;pairs) and
+unions.</p>
+
+<p>To create products we represent the pair of <code>$u</code> and
+<code>$v</code> as a function which is capable, on demand, of
+producing one or the other variable:</p>
+
+<ul>
+
+<li>The <code>&lt;cons&gt;</code> function (creates a pair from its
+two arguments) is <code>^u^v^f``$f$u$v</code>,
+i.e.&nbsp;<code>``s``s`ks``s`kk``s`ks``s`k`sik`kk</code>.</li>
+
+<li>The <code>&lt;car&gt;</code> function (returns the pair's first
+element) is <code>^p`$pk</code>, i.e.&nbsp;<code>``si`kk</code>.</li>
+
+<li>The <code>&lt;cdr&gt;</code> function (returns the pair's second
+element) is <code>^p`$p`ki</code>,
+i.e.&nbsp;<code>``si`k`ki</code>.</li>
+
+</ul>
+
+<p>A union type is one which is capable of retaining one of two cases,
+with one datum in each case, and distinguish the two cases.  It is
+dual to a product type:</p>
+
+<ul>
+
+<li>The <code>&lt;q1&gt;</code> function (creates a union in the first
+case) is <code>^u^f^g`$f$u</code>,
+i.e.&nbsp;<code>``s`k`s`kk``s`k`sik</code>.</li>
+
+<li>The <code>&lt;q2&gt;</code> function (creates a union in the
+second case) is <code>^v^f^g`$g$v</code>,
+i.e.&nbsp;<code>``s`kk``s`k`sik</code>.</li>
+
+<li>The <code>&lt;switch&gt;</code> function (takes a union and two
+functions and applies the first one to the union's data in the first
+case, the second one in the second case) is
+<code>^q^f^g``$q$f$g</code>, i.e.&nbsp;<code>i</code>.</li>
+
+</ul>
+
+<p>What you can do with these types is up to your imagination.  A list
+might be created as a chain of pairs, for example.  There is a little
+difficulty at the end of the list (to represent the empty list, that
+is).  The obvious way around it is to represent a list by a union
+type, where the first case represents the empty list and the second
+case represents a pair of the first element and the rest of the list.
+This works but it is long.  Another solution is use <code>v</code> for
+the empty list: this is more practical for some operations
+(essentially, because it is shorter), and less for others (essentially
+because <code>v</code> is a bit tricky to detect, and requires call/cc
+for that).</p>
+
+<h4><a name="howto_bool">How do I write tests and booleans in
+Unlambda?</a></h4>
+
+<p>A pair of <dfn>boolean values</dfn> is a pair of Unlambda functions
+used (arbitrarily) to represent “true” and
+“false”.  The essential thing is that they be universal,
+i.e.&nbsp;there should exist an <code>&lt;ifthenelse&gt;</code>
+function which takes three arguments: if the first is the boolean
+<code>&lt;true&gt;</code> then it returns the second, if the first is
+the boolean <code>&lt;false&gt;</code> then it returns the third.</p>
+
+<p>Many pairs of functions can be used to represent booleans.  Here
+are a few suggestions:</p>
+
+<ul>
+
+<li><code>i</code> and <code>v</code>: this choice is the “standard”
+(or “internal”) Unlambda choice of booleans (because it is used by
+the input functions, and because the functions are already part of the
+language).  They have some advantages, for example then
+<code>&lt;and&gt;</code> function is very easy to write (it is
+<code>^p^q`$p$q</code>, hence <code>i</code>).  They are frequently
+useful in the case where <code>$f</code> is a function which performs
+some side effects (when passed an argument <code>$x</code>, say): if
+you want to make the side effects happen according to the value of a
+boolean <code>$b</code>, just replace <code>`$f$x</code> by
+<code>``$b$f$x</code>.  However, because <code>v</code> is difficult
+to test, the <code>&lt;ifthenelse&gt;</code> function is a bit
+complex: it is <code>^b`c^q``k`ki``$b$qk</code>,
+i.e.&nbsp;<code>``s`kc``s`k`s`k`k`ki``ss`k`kk</code></li>
+
+<li><code>k</code> and <code>`ki</code>: this choice is also very
+standard.  The advantage is that the
+<code>&lt;ifthenelse&gt;</code> function is extremely simple: it is
+<code>^b^x^y``$b$x$y</code>, i.e.&nbsp;<code>i</code> (notice how
+<code>i</code> plays many roles in Unlambda?).  The perspicacious
+reader will observe that, because of this, we build the
+<code>&lt;ifthenelse&gt;</code> of the other boolean pairs by
+converting them to this pair.</li>
+
+<li><code>^x^y`$x$y</code> (i.e.&nbsp;<code>i</code>) and
+<code>^y^x`$y$x</code> (i.e.&nbsp;<code>``s`k`sik</code>).  Then the
+<code>&lt;ifthenelse&gt;</code> is <code>^b``$b`kk`k`ki</code>,
+i.e.&nbsp;<code>``s``si`k`kk`k`k`ki</code>.</li>
+
+<li><code>i</code> and <code>`ki</code>: these are the two first
+Church integers.  The <code>&lt;ifthenelse&gt;</code> function is then
+<code>^b``$b`kk`ki</code>,
+i.e.&nbsp;<code>``s``si`k`kk`k`ki</code>.</li>
+
+</ul>
+
+
+<h2><a name="quine">A note about the Unlambda Quine Contest</a></h2>
+
+<p>Recall that a <a href="http://www.eleves.ens.fr:8080/home/madore/computers/quine.html">quine</a>
+is a program that prints its own listing.  By the <a href="http://www.eleves.ens.fr:8080/home/madore/computers/quine.html#sec_fp">fixed
+point theorems</a> in logic, such a program exists in any
+Turing-complete language in which printing an arbitrary string is
+possible (by a computable program of the string — a technical
+criterion which is satisfied in <em>all</em> programming languages in
+existence).  Although the fixed point theorem is constructive (and
+thus actually algorithmically produces a quine), actually writing down
+the program can be difficult.  See my <a href="http://www.eleves.ens.fr:8080/home/madore/computers/quine.html">quine
+page</a> and my <a href="http://www.eleves.ens.fr:8080/home/madore/programs/#prog_selfrep">personal
+collection of quines</a> for examples of quines in (ordinary, non
+obfuscated) programming languages.</p>
+
+<p>From 1999/10/27 to 1999/11/03, I opened the Unlambda Quine Contest:
+I had written <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/CUAN/quine/quine00.unl">a
+quine</a> in Unlambda myself, and I invited anyone else to do so.
+During that week, the quines were kept secret (only their md5
+fingerprint was revealed so that it could be later checked), in order
+that their independence be guaranteed.  I offered a copy of the <a href="http://www.amazon.com/exec/obidos/ASIN/0262510871/002-3800222-4622653">Wizard
+Book</a> to the first person to produce a quine (retrospecively I find
+that I should have offered it to the best quine, or to the shortest
+one, or some such thing, but no matter).</p>
+
+<p>The contest is now over.  Olivier Wittenberg (<em><a href="mailto:olivier.wittenberg@ens.fr">olivier.wittenberg@ens.fr</a></em>)
+won the prize with his <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/CUAN/quine/quine01.unl">one
+megabyte quine</a> that he sent me within a few hours of the contest's
+opening.  Subsequent quines were written by Panu Kalliokoski (<em><a href="mailto:Panu.Kalliokoski@nokia.com">Panu.Kalliokoski@nokia.com</a></em>),
+<a href="http://www.eleves.ens.fr:8080/home/marot/">Jean Marot</a>
+(<em><a href="mailto:jean.marot@ens.fr">jean.marot@ens.fr</a></em>),
+<a href="http://www.eleves.ens.fr:8080/home/auroux/">Denis Auroux</a>
+(<em><a href="mailto:denis.auroux@ens.fr">denis.auroux@ens.fr</a></em>) and
+Jacob Mandelson (<em><a href="mailto:jlm@ghs.com">jlm@ghs.com</a></em>).</p>
+
+<p>All these quines are truly gems (and, once again, I congratulate
+all the authors).  The <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/CUAN/quine/quine06.unl">shortest
+one</a> is only 491 bytes long, and was written by Jean Marot.  The <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/CUAN/quine/quine14.unl">most
+efficient</a> one (in terms of data/code size ratio) was written by
+Denis Auroux.  <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/CUAN/quine/quine11.unl">Jacob
+Mandelson's quine</a> is also very remarkable in that it minimizes the
+number of dots (dots are printing functions in Unlambda) to only
+60.</p>
+
+<p>The full list of quines can be found in the <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/CUAN/quine/"><code>quine/</code>
+directory</a> on the <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/CUAN/">FTP
+repository</a> of the <a href="http://www.madore.org/~david/programs/unlambda/#cuan">Comprehensive Unlambda Archive
+Network</a>.</p>
+
+<p>I don't have any special remarks to make about how quines can be
+written in Unlambda.  My general <a href="http://www.eleves.ens.fr:8080/home/madore/computers/quine.html">quine
+page</a> already contains everything I have to say about quines; as
+for the particular case of Unlambda, well, for my part, I used a <a href="http://www.madore.org/~david/programs/unlambda/#howto_lists">list representation</a> of the data, but many more
+subtle and compact representations were found later.</p>
+
+
+<h2><a name="impl">Implementing Unlambda</a></h2>
+
+<p>Writing programs in Unlambda is a good exercice in patience, order
+and method.  It is not fundamentally difficult, being mainly a
+question of applying <a href="http://www.madore.org/~david/programs/unlambda/#lambda_elim">abstraction
+elimination</a> to expressions of the untyped lambda calculus (of
+course, obtaining these expressions in the first place is not
+necessarily evident); if you're messy it will turn into a nightmare.
+Debugging or reading Unlambda programs is just about impossible.</p>
+
+<p>Another problem is to write <em>implementations</em> of the
+Unlambda language (i.e.&nbsp;interpreters, that is, a program that
+takes an Unlambda program as input, and executes it).  This is a task
+that demands less caution (an Unlambda interpreter is far easier to
+debug, or to read if someone else wrote it, than an Unlambda program)
+but more smartness, especially if the targeted language (the language
+in which the interpreter is written) is a low-level language like C.
+For the Unlambda programming language combines the difficulties of its
+two families: of functional languages as far as writing an interpreter
+goes and of obfuscated languages as far as writing programs goes.  At
+any rate, Unlambda certainly has some nasty features that make it hard
+to write an interpreter for; and we now discuss some of these nasty
+features and how to get around them.</p>
+
+<p>Writing an Unlambda interpreter is certainly pedagogically
+interesting.  I think it can be a good introduction to some important
+concepts in theoretical computer science, because it presents the
+major difficulties (the “nasty features” as I called them a minute
+ago) of high-level language interpreters without some of the technical
+burden of typing or variable bindings (these are interesting also, but
+it may be good to postpone learning about them to a later lesson).
+For my part, I certainly learned a good deal by writing various
+Unlambda interpreters.  Unfortunately, I have neither the place nor
+the knowledge to go in the details of all the important theoretical
+concepts, but you will learn a lot by trying to write an Unlambda
+interpreter yourself.</p>
+
+<p>The first interpreter written was the one in Scheme, which forms
+the Unlambda&nbsp;1.0.0 distribution.  This interpreter is not really
+interesting, for one thing because Scheme has so many features it
+makes it almost trivial to interpret Unlambda in.  The Unlambda 2.0.0
+distribution, however, includes interpreters in several other
+languages.  I suggest beginners to start with the one in Java.  It is
+only of pedagogical interest (being <em>very</em> inefficient), and I
+have taken care to put a <em>lot</em> of comments in it, and to write
+it very cleanly (despite the comments themselves' claim to the
+contrary).</p>
+
+<p>One question which is yet open, however, is how difficult it is to
+write an Unlambda interpreter in Unlambda.  That more or less combines
+the two classes of difficulty (writing Unlambda programs and writing
+Unlambda interpreters).  I still think that the first class (the
+difficulty of writing Unlambda programs) would be the dominant one;
+for one thing, Unlambda (as Scheme) already has all the necessary
+bells and whistles (such as a <a href="http://www.eleves.ens.fr:8080/home/madore/computers/callcc.html"><code>call/cc</code></a>
+function) making interpreting Unlambda (relatively) easy.</p>
+
+<p>Basically, any functional language interpreter is centered, as
+explained in the <a href="http://www.amazon.com/exec/obidos/ASIN/0262510871/002-3800222-4622653">Wizard
+Book</a>, on the so-called <i>eval</i>/<i>apply</i> cycle, with two
+functions, <i>eval</i> and <i>apply</i>, calling each other
+recursively.  <i>Eval</i> takes an expression of the language and
+evaluates it (i.e.&nbsp;executes it), whereas <i>apply</i> takes a
+function (already evaluated) and some arguments, and applies the
+former to the latter.  <i>Eval</i> calls on <i>apply</i> to evaluate
+applications (what in Unlambda we write
+<code>`<var>F</var><var>G</var></code>), and <i>apply</i> calls on
+<i>eval</i> to evaluate the body of a function (in Unlambda, we can
+argue that functions don't have bodies, but still, when <i>apply</i>
+is told, for example, to apply <code>s</code> to three arguments
+<var>X</var>, <var>Y</var> and <var>Z</var>, it calls <i>eval</i> on
+<code>``<var>X</var><var>Z</var>`<var>Y</var><var>Z</var></code>).</p>
+
+<p>So, the basic Unlambda interpreter (forgetting about <code>d</code>
+for the moment), written in a sufficently high-level language is very
+simple: <i>eval</i> evaluates all the builtins to themselves and calls
+<i>apply</i> to evaluate applications; in turn, <i>apply</i> makes
+<code>``k<var>X</var><var>Y</var></code> into <var>X</var> and
+<code>```s<var>X</var><var>Y</var><var>Z</var></code> into
+<code>``<var>X</var><var>Z</var>`<var>Y</var><var>Z</var></code>
+(which is again fed to <i>eval</i>).  Certain features of Unlambda, or
+unfeatures of the meta language, will complicate the evaluator.</p>
+
+<h3><a name="impl_func">First-class functions</a></h3>
+
+<p>Unlambda has first-class functions.  In my sketchy description above,
+I've simply omitted the important fact that an Unlambda function can
+be something like <code>`s<var>X</var></code> (a “partially applied”
+<code>s</code>).</p>
+
+<p>If the underlying language (the language in which the interpreter is
+written, aka the “meta” language) has first-class functions, then
+the obvious thing is to represent Unlambda functions by functions of
+the underlying language, in which case the <i>apply</i> function of
+the interpreter becomes particularly trivial (it is just the
+<i>apply</i> function of the underlying language).  Actually, this is
+not what has been done in the interpreters that accompany the Unlambda
+distribution (for one thing, because it was more tempting to make the
+<i>eval</i> function trivial than the <i>apply</i> function), even in
+languages where this would have been possible (see the SML/NJ version
+of the interpreter for a good example of this).  But it is something
+worth thinking on (an Unlambda interpreter in Unlambda would probably
+use this system).</p>
+
+<p>Rather than using first-class functions of the underlying language
+to represent first-class functions in Unlambda, we can represent them
+using data structures: represent <code>`k<var>X</var></code> as a
+function <code>k1</code> with a hidden parameter <var>X</var>:
+applying <code>k</code> yields <code>k1</code>, and applying
+<code>k1</code> yields the hidden parameter.  These hidden parameters
+are what would correspond, if we were interpreting a real high-level
+(functional) language, to closures (i.e.&nbsp;function environments).
+It should be noted that these closures can become arbitrarily complex
+(indeed, they are the only kind of data structures we have in
+Unlambda), and that they will require some kind of memory management
+(see <a href="http://www.madore.org/~david/programs/unlambda/#impl_gc">below</a>).</p>
+
+<p>Furthermore, if the underlying language (say, CAML) has first-class
+functions and is tail-recursive, then, even if it does not have
+first-class continuations, the difficulties we have with implementing
+the <a href="http://www.madore.org/~david/programs/unlambda/#impl_cont">continuations</a> of Unlambda are greatly
+alleviated.  Indeed, we can then rewrite the interpreter in <a href="http://www.eleves.ens.fr:8080/home/madore/computers/callcc.html#sec_CPS">Continuation
+Passing Style</a> (see <a href="http://www.madore.org/~david/programs/unlambda/#impl_cont">below</a>) and represent
+the (passed) continuations as functions of the underlying language,
+which get called in a tail-recursive manner.</p>
+
+<p>If the underlying language does not have first-class functions,
+then they must be emulated by means of data structures (indeed, the
+only “variable” part in a first-class function is its closure, and
+that can be represented by a data structure, since the code is always
+the same).  This is more or less clear in the Java version of the
+Unlambda interpreter (Java does not have first-class functions, so we
+use classes and methods instead, as we are supposed to).</p>
+
+<h3><a name="impl_cont">First-class continuations</a></h3>
+
+<p>Continuations are the major pain for implementing Unlambda when the
+underlying language does not have them.  I refer to my <a href="http://www.eleves.ens.fr:8080/home/madore/computers/callcc.html"><code>call/cc</code></a>
+page (hoping for it to be finished some day) for a more detailed
+discussion on first-class continuations.</p>
+
+<p>Essentially, the canonical method is to rewrite the interpreter in
+<a href="http://www.eleves.ens.fr:8080/home/madore/computers/callcc.html#sec_CPS">Continuation
+Passing Style</a>.  Then <i>eval</i> and <i>apply</i> take one more
+argument: a continuation, and instead of returning their result, they
+throw that result to the continuation they were given (the
+continuation represents the “future of computation” at this point,
+and it is the continuation which will call the further <i>eval</i> and
+<i>apply</i> functions as needed).</p>
+
+<p>If the underlying language has first-class continuations, of
+course, then we do not need CPS, because we can represent the
+continuations of Unlambda by continuations in the meta language (this
+is what has been done in the Scheme and SML/NJ versions of the
+interpreter).  If it does not, but at least it has first-class
+functions and is properly tail-recursive, then we can very easily
+rewrite the interpreter in CPS, by representing continuations of
+Unlambda by functions in the meta language (this is what has been done
+in the Caml version of the interpreter, since Caml has first-class
+functions but not first-class continuations; it may be instructive to
+compare the Caml version with the SML/NJ version).  In this case, the
+<i>eval</i> and <i>apply</i> functions each terminate by calling their
+continuation in tail-recursive manner, so tail-recursion is heavily
+used.</p>
+
+<p>If the underlying language (or, more precisely, its implementation)
+is not properly tail-recursive, then we cannot use CPS directly,
+because CPS calls are tail-recursive, they never terminate (except at
+the very end of the program), so in a non properly tail-recursive
+language, this will give a stack overflow (consider, for example, the
+RCS revision 1.5 of the Unlambda interpreter in Java that is included
+in the distribution).  There are various ways to work around this.  I
+don't know what is “standard”, if anything.  One way which I find
+elegant is to introduce “tasks”: rather than having <i>apply</i> and
+<i>eval</i> never terminate and finish by calling their continuation,
+have them return a “task”, which is something like a continuation
+plus a value about to be thrown to the continuation, and when the task
+is run, it proceeds with the computation.  For details, consider the
+changes between RCS revisions 1.5 and 1.6 of the interpreter in
+Java.</p>
+
+<p>[All this discussion does not specifically concern Unlambda.  It
+should be moved to my <a href="http://www.eleves.ens.fr:8080/home/madore/computers/callcc.html"><code>call/cc</code></a>
+page when I find the time.]</p>
+
+<p>If the underlying language has <em>neither</em> first-class
+continuations <em>nor</em> first-class functions <em>nor</em> proper
+tail-recursion, as is the case of C, then things are even more messy.
+All the missing abstraction layers have to be built up from scratch.
+First-class functions, as noted <a href="http://www.madore.org/~david/programs/unlambda/#impl_func">earlier</a>, have
+to be replaced by the appropriate data structures, both in the
+handling of the Unlambda functions themselves, and in the handling of
+the Unlambda continuations.  Yuck.</p>
+
+<h3><a name="impl_gc">Garbage collection</a></h3>
+
+<p>As in any language having first-class (higher-order) functions,
+and, therefore, escaping closures, the lifetime of the various
+structures is not statically determined in Unlambda, and some kind of
+automatic memory management (aka “garbage collection”) is necessary.
+If the underlying language has first-class functions and Unlambda
+functions are represented by functions of the meta language, then the
+garbage collection system for the meta language is used in Unlambda as
+well, and all is transparent.  If it does not, data structures must be
+used to replace the missing functionalities, and these data structures
+have to be garbage collected.  If the underlying language has garbage
+collection (e.g. Java), then all is for the better, because, there
+again, we can rest on the existing structures.  But if it doesn't,
+some kind of memory management has to be added to the interpreter.
+The simplest solution is to use an external garbage collector (for
+example, the <a href="http://www.hpl.hp.com/personal/Hans_Boehm/gc/">Hans Boehm
+conservative C/C++ garbage collector</a>, which I used in the C
+version of the interpreter).</p>
+
+<p>But, as Jacob Mandelson (<em><a href="mailto:jlm@ghs.com">jlm@ghs.com</a></em>) pointed out to me (and
+as he demonstrated in <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/contrib/mandelson-unlambda.c">his
+Unlambda interpreter</a>, full garbage collection is not necessary in
+Unlambda.  Indeed, since the language is without side-effects, and in
+particular without the possibility of modifying pointers (in the
+closures) once they are created, new objects can only point to older
+objects, and cycles cannot be created.  Under those circumstances, a
+simpler memory mangement system will suffice: reference counting
+(i.e.&nbsp;keeping a count of the number of references to each object,
+and freeing a pointer when the reference count becomes 0).  The
+interpreter present in the <code>c-refcnt/</code> directory of the
+Unlambda distribution uses this reference counting method (and is
+otherwise identical to the garbage-collected interpreter in the
+<code>c/</code> directory).</p>
+
+<h3><a name="impl_prom">Promises</a></h3>
+
+<p>Promises (i.e.&nbsp;the use of the <code>d</code> function) make
+Unlambda a bit more of a mess.  Without them, the <i>eval</i> function
+would be completely straightforward: call <i>eval</i> on the operator,
+call <i>eval</i> on the operand, and then call <i>apply</i> of the
+former on the latter.  But in fact, the result of the first
+<i>eval</i> must be checked: if it happens to be <code>d</code>, then
+the further steps are not performed, the operand is bundled
+(unevaluated) in a <em>promise</em>, and that promise is returned
+(e.g. thrown to the continuation) as the result of the computation.
+Promises are forced in the <i>apply</i> function: when <i>apply</i>
+receives a promise as operator, it must call <i>eval</i> to
+<em>force</em> the promise, and to evaluate the part that was left
+unevaluated, and finally apply it to the operand.</p>
+
+<p>It may, therefore, seem that the <i>apply</i> function will never
+receive <code>d</code> as operator (it is held back at the level of
+the <i>eval</i> function).  Indeed, if you consider the SML/NJ or Caml
+versions of the interpreter, that part of the pattern matching is
+commented out.  But there are subtleties: what about something like
+<code>`cd</code>: the <a href="http://www.madore.org/~david/programs/unlambda/#ref">Unlambda specifications</a>
+clearly state that this evaluate <code>`d&lt;cont&gt;</code>, with
+<code>&lt;cont&gt;</code> being the appropriate continuation.  But
+instead of constructing the <code>`d&lt;cont&gt;</code> expression and
+calling <i>eval</i> on it, we may prefer to directly call <i>apply</i>
+on <code>d</code> and the appropriate continuation, in which case
+<i>apply</i> will, indeed, receive <code>d</code> as operator.  (See
+the note in the <code>invoke</code> method of the
+<code>DelContinuation</code> class in the interpreter written in
+Java.)</p>
+
+<h3><a name="impl_comp">Can Unlambda be compiled?</a></h3>
+
+<p>An interesting question, and one whose answer I do not really know,
+for one thing because I'm not entirely certain as to what
+“compiling” should mean.</p>
+
+<p>On the one hand, we can certainly write a program (technically,
+using the snm theorem) that takes an Unlambda program, possibly parses
+it, and bundles it with an Unlambda interpreter, and call that the
+“compiled” version.  I don't think that qualifies as a compiler: a
+compiler should turn Unlambda code into <em>code</em> of the target
+language, not <em>data</em> that will be interpreted by some generic
+code.  Unfortunately, the boundaries between code and data are not as
+clear as I would like them to be (see also my <a href="http://www.eleves.ens.fr:8080/home/madore/computers/quine.html">quine
+page</a> for more thoughts on the subject).  Unlambda can certainly be
+compiled in Unlambda at least, by the identity function.  Jacob
+Mandelson (<em><a href="mailto:jlm@ghs.com">jlm@ghs.com</a></em>)
+observed that it is more reasonable to try “decompiling” Unlambda
+than “compiling” it.</p>
+
+<p>If we restrict ourselves to the S, K and I combinators (as well as
+printing functions), removing the troublesome C and D functions, then
+Unlambda can be compiled, at least in a high-level functional language
+(which can then be compiled in low-level imperative languages using
+standard methods): for example, <code>```sii``sii</code> (an endless
+loop) would be trivially compiled, using a lisp-like notation, in
+<code>(((S I) I) ((S I) I))</code>, where <code>S</code> and
+<code>I</code> are part of the “Unlambda run-time library”.  This
+may seem like a void assertion, but note the important difference
+between this and producing <code>(interpret '(((S I) I) ((S I)
+I)))</code>, where only <code>interpret</code> is defined: the former
+is a true (albeit trivial) compilation, and the latter is merely
+bundling the program as data with an interpreter to read the data.
+The <code>c</code> (call/cc) function would not cause considerable
+trouble either, if the underlying language (the target language for
+compilation) has first-class continuations, and even if it doesn't, we
+can emulate them for example by producing CPS code.</p>
+
+<p>Promises are a much bigger problem: I don't think it is possible to
+compile Unlambda, with the <code>d</code> special form, in a
+reasonable programming language.  Indeed, whereas we could convert
+“apparent” promises, such as <code>`d<var>X</var></code>, into
+promises from the target language, it is not possible to know
+beforehand whether a piece of code will really be interpreted or
+merely made into a promise.</p>
+
+<p>On the other hand, promises aren't anything like an
+<code>eval</code> function (something that canonically can't be
+compiled — or at any rate, to compile it you need to bundle the
+program with an entire interpreter or compiler).  So maybe it is
+possible after all, but I'm very uncertain as to the way it should
+work.  I wish I could express myself more clearly.</p>
+
+
+<h2><a name="ref">Unlambda reference</a></h2>
+
+<p>First we must specify that whitespace is ignored in an Unlambda
+program (wherever it may be, except, naturally, between the period and
+the character in the <code>.<var>x</var></code> function name).
+Comments are also ignored, a comment being anything starting from the
+<code>#</code> character to the end of the line.</p>
+
+<p>If <var>F</var> and <var>G</var> are two Unlambda expressions, then
+the expression <code>`<var>F</var><var>G</var></code> is also an
+expression (called the <em>application</em> of <var>F</var> to
+<var>G</var>).  It is evaluated as follows: <em>first</em>,
+<var>F</var> is evaluated (and its value is a function, since there is
+no other kind of values in Unlambda); if the value of <var>F</var> is
+not <code>d</code>, <em>then</em>, <var>G</var> is evaluated, and
+finally the value of <var>F</var> is applied to the value of
+<var>G</var>.</p>
+
+<p>To complete the description of Unlambda, we need therefore only
+specify what happens when <var>F</var> is applied to <var>G</var>, and
+to do that we consider each possible value of <var>F</var>.</p>
+
+<dl>
+
+<dt><code>k</code> (“constant generator”)</dt><dd>The <code>k</code>
+function takes an argument <var>X</var> and returns the function
+<code>`k<var>X</var></code> (see below).</dd>
+
+<dt><code>`k<var>X</var></code> (“constant function”)</dt><dd>The
+<code>`k<var>X</var></code> function (which is not primitive but
+obtained by applying the primitive function <code>k</code> to some
+function <var>X</var>) takes an argument, ignores it and returns
+<var>X</var>.</dd>
+
+<dt><code>s</code> (“substitution”)</dt><dd>The <code>s</code>
+function takes an argument <var>X</var> and returns the function
+<code>`s<var>X</var></code> (see below).</dd>
+
+<dt><code>`s<var>X</var></code> (“substitution first
+partial”)</dt><dd>The <code>`s<var>X</var></code> function (which is
+not primitive but obtained by applying the primitive function
+<code>s</code> to some function <var>X</var>) takes an argument
+<var>Y</var> and returns the function
+<code>``s<var>X</var><var>Y</var></code> (see below).</dd>
+
+<dt><code>``s<var>X</var><var>Y</var></code> (“substituted
+application”)</dt><dd>The <code>``s<var>X</var><var>Y</var></code>
+function (which is not primitive but obtained by applying the
+primitive function <code>s</code> to two functions <var>X</var> and
+<var>Y</var> successively) takes an argument <var>Z</var> and returns
+the evaluation of
+<code>``<var>X</var><var>Z</var>`<var>Y</var><var>Z</var></code>.</dd>
+
+<dt><code>i</code> (“identity”)</dt><dd>The <code>i</code> function
+takes an argument and returns that argument.</dd>
+
+<dt><code>v</code> (“void”)</dt><dd>The <code>v</code> function
+takes an argument <var>X</var> and returns <code>v</code> itself.</dd>
+
+<dt><code>c</code> (“call with current continuation”)</dt><dd>The
+<code>c</code> function takes an argument <var>X</var> and returns
+either the evaluation of <code>`<var>X</var>&lt;cont&gt;</code> where
+<code>&lt;cont&gt;</code> is <code>c</code>'s current continuation
+(see below), or else the value passed to <code>&lt;cont&gt;</code> if
+the latter was applied (with the effect of making <code>c</code>
+return immediately).</dd>
+
+<dt><code>&lt;cont&gt;</code> (a continuation)</dt><dd>Continuations
+take an argument and non-locally jump to the point in history when the
+evaluator was waiting for the corresponding <code>c</code> to return,
+making that <code>c</code> return that argument.</dd>
+
+<dt><code>d</code> (“delay”)</dt><dd>The <code>d</code> function is
+never truly applied (it is a special form).  It only occurs in the
+form <code>`d<var>F</var></code> where <var>F</var> is an Unlambda
+expression (see below).</dd>
+
+<dt><code>`d<var>F</var></code> (“promise”)</dt><dd>The
+<code>`d<var>F</var></code> function takes an argument <var>Y</var>
+and evaluates <var>F</var>, giving a function <var>X</var>, and
+returns the evaluation of <code>`<var>X</var><var>Y</var></code>.</dd>
+
+<dt><code>.<var>x</var></code> (“print”) and <code>r</code>
+(“carriage return”)</dt><dd>The <code>.<var>x</var></code> function
+is written using <em>two</em> characters.  The first character is a
+period and the second is any character.  Nevertheless,
+<code>.<var>x</var></code> is a single function in Unlambda, and
+<var>x</var> in this expression is merely a character (read during
+parsing), not a parameter to the function.  The <code>r</code>
+function is exactly equivalent to <code>.<var>(newline)</var></code>.
+The <code>.<var>x</var></code> function behaves like the
+<code>i</code> (identity) function, with the side effect that it
+prints the character <var>x</var> (to the standard output) when it is
+applied.  The <code>r</code> function also behaves like the identity
+and prints a newline character.</dd>
+
+<dt><code>e</code> (“exit”) <strong>only in Unlambda version 2 and
+greater</strong></dt><dd>The <code>e</code> function takes an argument
+<var>X</var>.  It exits immediately, pretending (if the interpreter
+cares) that the result of the evaluation of the program is
+<var>X</var>.</dd>
+
+<dt><code>@</code> (“read”) <strong>only in Unlambda version 2 and
+greater</strong></dt><dd>The <code>@</code> function takes an argument
+<var>X</var>.  It reads one character from the standard input, making
+it the “current character” and returns the evaluation of
+<code>`<var>X</var>i</code> or of <code>`<var>X</var>v</code>
+according as one character has been read successfully or not (for
+example on EOF).</dd>
+
+<dt><code>?<var>x</var></code> (“compare character read”)
+<strong>only in Unlambda version 2 and greater</strong></dt><dd>The
+<code>?<var>x</var></code> function (where <var>x</var> is a
+character, as in the <code>.<var>x</var></code> function) takes an
+argument <var>X</var>.  It returns the evaluation of
+<code>`<var>X</var>i</code> or of <code>`<var>X</var>v</code>
+according as the current character (the one read by the last
+application of <code>@</code>) is <var>x</var> or not (if
+<code>@</code> has not been applied or if it has encountered an EOF,
+there is no current character, and <var>x</var> is deemed not to be
+equal to the current character).</dd>
+
+<dt><code>|</code> (“reprint character read”) <strong>only in
+Unlambda version 2 and greater</strong></dt><dd>The <code>|</code>
+function takes an argument <var>X</var>.  It returns the evaluation of
+<code>`<var>X</var>.<var>x</var></code>, where <var>x</var> is the
+current character (the one read by the last application of
+<code>@</code>) or of <code>`<var>X</var>v</code> if there is no
+current character (i.e.&nbsp;if <code>@</code> has not yet been
+applied or if it has encountered an EOF).</dd>
+
+</dl>
+
+
+<h2><a name="distrib">Unlambda distribution</a></h2>
+
+<p>Unlambda 2.0.0 is now available.  You can download it using <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/unlambda-2.0.0.tar.gz">FTP</a>
+or using <a href="http://www.eleves.ens.fr:8080/home/madore/unlambda-2.0.0.tar.gz">HTTP</a>,
+but using FTP is preferred if you have the choice.  If you want older
+versions, they are available in this <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/">FTP
+directory</a>.</p>
+
+<p>Unlambda is distributed under the terms of the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public
+License</a>, either version 2 of this license, or, at your option, any
+later version.  Since Unlambda is Free Software, it comes with
+<strong>absolutely no warranty</strong>: see the GNU General Public
+License for more details.</p>
+
+<p>(Note that this concerns the <em>distribution</em>.  There is no
+copyright on the <em>language</em> itself: you do not need to ask for
+my permission to write an Unlambda interpreter, and you are permitted
+(though by no means encouraged) to write a non-free interpreter.  As a
+matter of fact, there exists at least one non-free Unlambda
+interpreter, <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/contrib/mandelson-unlambda.c">the
+one</a> written by Jacob Mandelson (<em><a href="mailto:jlm@ghs.com">jlm@ghs.com</a></em>), which is <em>far</em>
+more efficient than the interpreters in the Unlambda
+distribution.)</p>
+
+<p>This document is included in the Unlambda distribution.  You can
+also find it on the World Wide Web at <a href="http://www.eleves.ens.fr:8080/home/madore/programs/unlambda/">http://www.eleves.ens.fr:8080/home/madore/programs/unlambda/</a>.</p>
+
+<p>Please send comments and suggestions about Unlambda and its
+interpreters to <a href="mailto:david.madore@ens.fr">david.madore@ens.fr</a>.</p>
+
+<p>Happy hacking!</p>
+
+
+<h2><a name="cuan">Comprehensive Unlambda Archive Network</a></h2>
+
+<p>The goal of the Comprehensive Unlambda Archive Network is to gather
+all the Unlambda programs that are written (provided their authors
+agree, of course).  Since there are very few programs in Unlambda
+altogether, it is convenient to centralize everything in one place, it
+will not take too much disk space, and a copy of the archive is
+included in the Unlambda distribution.</p>
+
+<p>You can find the archive in the directory <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/CUAN/"><code>/pub/madore/unlambda/CUAN/</code></a>
+on <a href="ftp://quatramaran.ens.fr/">the “Quatramaran” FTP
+site</a>.  See <a href="ftp://quatramaran.ens.fr/pub/madore/unlambda/CUAN/MANIFEST">the
+<code>MANIFEST</code> file</a> for a list of the programs in the CUAN.
+Please <a href="mailto:david.madore@ens.fr">drop me a note</a> if you
+have a program you want to add to the archive.</p>
+
+
+<hr>
+
+<p class="navbar">
+This site is part of <a href="http://lightning.prohosting.com/~kgaughan/esolang.html">the
+Esoteric Programming Languages Ring</a>:<br>
+[
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;id=6;prev5">Previous 5 Sites</a>
+|
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;id=6;prev">Previous</a>
+|
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;id=6;next">Next</a>
+|
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;id=6;next5">Next 5 Sites</a>
+|
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;random">Random Site</a>
+|
+<a href="http://nav.webring.org/cgi-bin/navcgi?ring=esolang;list">List Sites</a>
+]
+</p>
+
+
+<address>
+<a href="mailto:david.madore@ens.fr">David Madore</a>
+</address>
+
+<p>Last modified: $Date: 2003/08/10 22:24:48 $</p>
+
+
+</body></html>
